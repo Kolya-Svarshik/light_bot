@@ -1,16 +1,11 @@
-const fetch = require("node-fetch");
+const axios = require("axios");
 require("dotenv").config();
 
-const url = `https://vadymklymenko.com/ping/?ip=${process.env.MY_IP}`;
+const getIp = `https://vadymklymenko.com/ping/?ip=${process.env.MY_IP}`;
 
 async function getApiRes() {
-  const request = fetch(url, {
-    method: "GET",
-    headers: { "Content-Text": "application/json" },
-  }).then((res) => res.json());
-  return request;
+  const request = await axios.get(getIp);
+  return request.data;
 }
-
-// request.then((res) => res.json()).then((json) => console.log(json));
 
 module.exports = getApiRes;
