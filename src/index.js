@@ -1,6 +1,7 @@
 const { Telegraf } = require("telegraf");
 
 const status = require("./light");
+const moment = require("moment-timezone");
 
 require("dotenv").config();
 
@@ -12,8 +13,7 @@ let textEl = "";
 bot.start(async (ctx) => {
   try {
     const chatId = ctx.chat.id;
-    const date = new Date();
-    const clock = date.toString().slice(16, 21);
+    const clock = moment().tz("Europe/Kiev").format().slice(11, 16);
 
     const onlight = async () => {
       const resStatus = await status();
@@ -29,8 +29,7 @@ bot.start(async (ctx) => {
     textEl = text.slice(0, 2);
 
     setInterval(async () => {
-      const date = new Date();
-      const clock = date.toString().slice(16, 21);
+      const clock = moment().tz("Europe/Kiev").format().slice(11, 16);
       const newStatusLight = await onlight();
 
       if (textEl.slice(0, 2) === newStatusLight.slice(0, 2)) {
